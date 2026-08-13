@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facturador D&K Santa Cruz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <section class="panel form-panel">
+      <div class="brand">
+        <div>
+          <h1>Generador de facturas</h1>
+          <p>Factura PDF sin base de datos ni almacenamiento.</p>
+        </div>
+        <span class="privacy">100% temporal</span>
+      </div>
+
+      <div class="section">
+        <h2>Datos de la factura</h2>
+        <div class="grid grid-4">
+          <label>N.º de factura
+            <input id="invoiceNumber" type="text" value="2">
+          </label>
+          <label>Fecha
+            <input id="invoiceDate" type="date">
+          </label>
+          <label>Moneda
+            <select id="currency">
+              <option value="$">$</option>
+            </select>
+          </label>
+          <label>IVA
+            <select id="taxRate">
+              <option value="0">0%</option>
+              <option value="13">13%</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Datos del negocio</h2>
+        <div class="grid grid-2">
+          <label>Nombre del negocio
+            <input id="businessName" value="Taller automotriz D&K Santa Cruz">
+          </label>
+          <label>Teléfono
+            <input id="businessPhone" value="+503 7415 0232">
+          </label>
+          <label>Dirección
+            <input id="businessAddress" value="[Calle]">
+          </label>
+          <label>Ciudad / país
+            <input id="businessCity" value="San Miguel, El Salvador">
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Datos del cliente</h2>
+        <div class="grid grid-2">
+          <label>Cliente
+            <input id="clientName" placeholder="Nombre del cliente">
+          </label>
+          <label>Empresa
+            <input id="clientCompany" placeholder="Nombre de la empresa">
+          </label>
+          <label>Dirección
+            <input id="clientAddress" placeholder="Calle / dirección">
+          </label>
+          <label>Ciudad, provincia y código postal
+            <input id="clientCity" placeholder="Ciudad, provincia y código postal">
+          </label>
+          <label>Teléfono
+            <input id="clientPhone" placeholder="Teléfono">
+          </label>
+          <label>Correo electrónico
+            <input id="clientEmail" type="email" placeholder="correo@ejemplo.com">
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-heading">
+          <div>
+            <h2>Items</h2>
+            <p>Agrega tantos productos o servicios como necesites.</p>
+          </div>
+          <button id="addItem" class="btn btn-secondary">+ Agregar item</button>
+        </div>
+
+        <div class="items-wrap">
+          <table class="items-editor">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="grid grid-2">
+          <label>Mensaje al pie
+            <input id="footerMessage" value="Gracias por su confianza">
+          </label>
+          <label>Nota adicional
+            <input id="invoiceNote" placeholder="Opcional">
+          </label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="clearAll" class="btn btn-light">Limpiar</button>
+        <button id="generatePdf" class="btn btn-primary">Generar PDF</button>
+      </div>
+
+      <p class="no-storage">
+        Esta aplicación no utiliza usuarios, base de datos, cookies ni almacenamiento local.
+        Los datos solo permanecen en memoria mientras esta página está abierta.
+      </p>
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="preview-header">
+        <div>
+          <h2>Vista previa</h2>
+          <span id="itemCount">0 items</span>
+        </div>
+        <button id="previewPdf" class="btn btn-light">Actualizar</button>
+      </div>
+
+      <div id="invoicePreview" class="invoice">
+        <!-- Se renderiza con JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@3.0.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@5.0.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
