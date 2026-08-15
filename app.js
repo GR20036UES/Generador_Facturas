@@ -53,21 +53,21 @@ function renderItemsEditor() {
   items.forEach((item, index) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>
+      <td data-label="Descripción">
         <input class="item-description" type="text" placeholder="Producto o servicio"
                value="${escapeHtml(item.description)}"
                data-index="${index}" data-field="description">
       </td>
-      <td>
+      <td data-label="Cantidad">
         <input class="item-qty" type="number" min="0" step="1"
                value="${item.quantity}" data-index="${index}" data-field="quantity">
       </td>
-      <td>
+      <td data-label="Precio unitario">
         <input class="item-price" type="number" min="0" step="0.01"
                value="${item.price}" data-index="${index}" data-field="price">
       </td>
-      <td class="item-total">${money((Number(item.quantity)||0)*(Number(item.price)||0))}</td>
-      <td><button class="delete-item" title="Eliminar" data-delete="${index}">×</button></td>
+      <td data-label="Total" class="item-total">${money((Number(item.quantity)||0)*(Number(item.price)||0))}</td>
+      <td class="delete-cell"><button class="delete-item" title="Eliminar" data-delete="${index}">×</button></td>
     `;
     body.appendChild(tr);
   });
@@ -79,17 +79,18 @@ function renderItemsEditor() {
       items[index][field] = field === "description"
         ? event.target.value
         : Number(event.target.value || 0);
-      renderItemsEditor();
-      renderPreview();
-      // Devolver el foco al campo modificado para que la edición sea fluida.
-      const inputs = $("itemsBody").querySelectorAll("input");
-      const same = [...inputs].find(el =>
-        Number(el.dataset.index) === index && el.dataset.field === field
-      );
-      if (same) {
-        same.focus();
-        try { same.setSelectionRange(same.value.length, same.value.length); } catch(e) {}
+
+      // No reconstruir la tabla mientras se escribe.
+      // Esto mantiene el mismo input y evita que el cursor salte al inicio.
+      const row = event.target.closest("tr");
+      const totalCell = row ? row.querySelector(".item-total") : null;
+      if (totalCell) {
+        const qty = Number(items[index].quantity) || 0;
+        const price = Number(items[index].price) || 0;
+        totalCell.textContent = money(qty * price);
       }
+
+      renderPreview();
     });
   });
 
