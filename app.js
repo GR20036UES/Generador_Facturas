@@ -264,7 +264,7 @@ function addPdfHeader(doc, data) {
 
   // Logo embebido en el HTML; no se guarda en servidor.
   try {
-    doc.addImage(DEFAULT_LOGO, "PNG", x, y, 38, 36);
+    doc.addImage(DEFAULT_LOGO, "PNG", pageWidth - 78, 47, 38, 36);
   } catch (e) {}
 
   doc.setFillColor(...blue);
